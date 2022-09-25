@@ -30,4 +30,4 @@ jobs:
             - name: DHT
             - name: ArduinoLowPower
             - name: mcp_can
-      - enable-deltas-report: true            
+      #- enable-deltas-report: true            
