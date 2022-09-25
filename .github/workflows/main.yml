@@ -23,7 +23,7 @@ jobs:
       - name: Compile Arduino Sketches
       - uses: arduino/compile-sketches@v1.0.1
         with:
-          fqbn: 'arduino:samd:mkr1400gsm'
+          fqbn: 'arduino:samd:mkrgsm'
           libraries: |
             - name: MKRGSM
             - name: ThingerMkRGSM
