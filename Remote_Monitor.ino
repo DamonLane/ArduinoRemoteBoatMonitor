@@ -20,12 +20,12 @@
 ThingerMKRGSM thing(USERNAME, DEVICE_ID, DEVICE_CREDENTIAL);
 
 // CAN Shield
-#define CAN0_INT 7 // Set INT to pin 2
-MCP_CAN CAN0(3); // Set CS to pin 10
+#define CAN0_INT 7 // Set INT pin
+MCP_CAN CAN0(3); // Set CS pin
 
 // Temp/RH initiliazation
 #define DHTPIN 0  // digital pin sensor is connected to
-#define DHTTYPE DHT22  // which DHT sensor? 11 or 22?
+#define DHTTYPE DHT22  // which DHT sensor: 11 or 22?
 DHT dht(DHTPIN, DHTTYPE);
 
 // Water sensors digital wet or dry type
@@ -131,7 +131,7 @@ Serial.println("thing.handle done.");
   // loop here to get more than one message? Move data into 1-2 messages?
   // looping 100 times didn't change the all-zero outputs
   // clear buffer or values each time through?
-  for(byte j = 0; j<100; j++){
+  for(byte j = 0; j<10; j++){
   // blank these variables read from CAN each time to avoid out of date data
   long unsigned int rxId = 0;
   unsigned char len = 0;
@@ -258,15 +258,6 @@ Serial.println("thing.handle done.");
  
   pson data;
   //data["bilge pump time"] = bilgeTimeHigh;
-  data["humidity"] = humidity;
-  //data["celsius"] = celsius;
-  data["fahrenheit"] = fahrenheit;
-  data["water high bilge"] = digitalRead(highBilge);
-  data["water low bilge"] = digitalRead(lowBilge);
-  data["water engine room"] = digitalRead(engineRoom);
-  data["bilge water depth"] = bilge_depth;
-  data["relay state"] = relay_state;
-  data["pack health"] = pack_health;
   data["SoC"] = SoC;
   data["avg cell V"] = cell_voltage_avg;
   data["high cell V"] = cell_voltage_high;
@@ -274,6 +265,15 @@ Serial.println("thing.handle done.");
   data["current"] = current;
   data["amp-hours"] = amphours;
   data["pack cycles"] = pack_cycles;
+  data["pack health"] = pack_health;
+  data["relay state"] = relay_state;
+  data["humidity"] = humidity;
+  //data["celsius"] = celsius;
+  data["fahrenheit"] = fahrenheit;
+  data["water high bilge"] = digitalRead(highBilge);
+  data["water low bilge"] = digitalRead(lowBilge);
+  data["water engine room"] = digitalRead(engineRoom);
+  data["bilge water depth"] = bilge_depth;
  
   // Print the data to the Serial monitor when debugging
   Serial.println("about to write data to thinger bucket");
@@ -302,7 +302,7 @@ Serial.println("thing.handle done.");
   Serial.println("Wrote data to thinger bucket, now to sleep!");
   // Sleep
   // Shut stuff off // test the power savings of these and uncomment or remove them
-  USBDevice.detach();        // Is this just communcations? What is power is coming in through USB?
+//  USBDevice.detach();        // Is this just communcations? What is power is coming in through USB? Was having this active causing single update boots?
  // shut off the modem
   Serial.end();
   digitalWrite(LED_BUILTIN, LOW);
